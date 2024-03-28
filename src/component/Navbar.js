@@ -4,7 +4,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState("드레스");
+  // const [searchTerm, setSearchTerm] = useState("드레스");
   const menuList = [
     "여성",
     "Divided",
@@ -16,13 +16,20 @@ const Navbar = () => {
     "지속가능성",
   ];
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  // const handleSearchChange = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
 
   const navigate = useNavigate();
   const goToLogin = () => {
     navigate("/login");
+  };
+
+  const search = (event) => {
+    if (event.key === "Enter") {
+      let keyword = event.target.value;
+      navigate(`/?q=${keyword}`);
+    }
   };
 
   return (
@@ -46,7 +53,7 @@ const Navbar = () => {
         </ul>
         <div className="input-container">
           <IoIosSearch />
-          <input type="text" value={searchTerm} onChange={handleSearchChange} />
+          <input type="text" onKeyPress={(event) => search(event)} />
         </div>
       </div>
     </div>
