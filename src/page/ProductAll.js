@@ -6,21 +6,21 @@ import { useSearchParams } from "react-router-dom";
 
 const ProductAll = () => {
   const [productList, setProductList] = useState([]);
-  const [query, setQuery] = useSearchParams();
-
-  const getProducts = async () => {
-    let searchQuery = query.get("q") || "";
-    let url = `http://localhost:5000/products?q=${searchQuery}`;
-    try {
-      let response = await fetch(url);
-      let data = await response.json();
-      setProductList(data);
-    } catch (error) {
-      console.error("Fetching products failed:", error);
-    }
-  };
+  const [query] = useSearchParams();
 
   useEffect(() => {
+    const getProducts = async () => {
+      let searchQuery = query.get("q") || "";
+      let url = `http://localhost:5000/products?q=${searchQuery}`;
+      try {
+        let response = await fetch(url);
+        let data = await response.json();
+        setProductList(data);
+      } catch (error) {
+        console.error("Fetching products failed:", error);
+      }
+    };
+
     getProducts();
   }, [query]);
 
@@ -30,8 +30,6 @@ const ProductAll = () => {
         <Row>
           {productList.map((product) => (
             <Col lg={3} key={product.id}>
-              {" "}
-              {/* key를 여기에 추가 */}
               <ProductCard product={product} />
             </Col>
           ))}
