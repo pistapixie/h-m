@@ -6,9 +6,13 @@ const ProductAll = () => {
 
   const getProducts = async () => {
     let url = `http://localhost:5000/products`;
-    let response = await fetch(url);
-    let data = await response.json();
-    setProductList(data);
+    try {
+      let response = await fetch(url);
+      let data = await response.json();
+      setProductList(data);
+    } catch (error) {
+      console.error("Fetching products failed:", error);
+    }
   };
 
   useEffect(() => {
