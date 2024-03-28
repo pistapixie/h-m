@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { IoIosSearch } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("드레스");
@@ -19,9 +20,14 @@ const Navbar = () => {
     setSearchTerm(event.target.value);
   };
 
+  const navigate = useNavigate();
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div>
-      <div className="login-button">
+      <div className="login-button" onClick={goToLogin}>
         <CiUser />
         <div>로그인</div>
       </div>
