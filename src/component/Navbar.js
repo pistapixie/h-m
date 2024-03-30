@@ -1,81 +1,95 @@
-// import React, { useState } from "react";
-import { CiUser } from "react-icons/ci";
-import { IoIosSearch } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import GeneralModal from "./GeneralModal";
-import { useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Navbar = ({ authenticate, setAuthenticate }) => {
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const confirmLogout = () => {
+    setAuthenticate(false);
+    setShowModal(false);
+  };
   const menuList = [
     "여성",
     "Divided",
     "남성",
     "신생아/유아",
     "아동",
-    "H&M Home",
+    "H&M HOME",
     "Sale",
     "지속가능성",
   ];
-
-  const handleLogout = () => {
-    setAuthenticate(false);
-    navigate("/");
-    handleCloseModal();
-  };
-
-  const search = (event) => {
+  let [width, setWidth] = useState(0);
+  let navigate = useNavigate();
+  const onCheckEnter = (event) => {
     if (event.key === "Enter") {
-      let keyword = event.target.value;
-      navigate(`/?q=${keyword}`);
+      navigate(`?q=${event.target.value}`);
     }
   };
-
-  const goToHome = () => {
-    navigate("/");
-  };
-
   return (
     <div>
-      <div
-        className="login-button"
-        onClick={authenticate ? handleShowModal : () => navigate("/login")}
-      >
-        <CiUser />
-        <div>{authenticate ? "로그아웃" : "로그인"}</div>
+      <div className="side-menu" style={{ width: width }}>
+        <button className="closebtn" onClick={() => setWidth(0)}>
+          &times;
+        </button>
+        <div className="side-menu-list" id="menu-list">
+          {menuList.map((menu, index) => (
+            <button key={index}>{menu}</button>
+          ))}
+        </div>
+      </div>
+      <div className="nav-header">
+        <div className="burger-menu hide">
+          <FontAwesomeIcon icon={faBars} onClick={() => setWidth(250)} />
+        </div>
+        {authenticate ? (
+          <div onClick={() => setShowModal(true)}>
+            <FontAwesomeIcon icon={faUser} />
+            <span style={{ cursor: "pointer" }}>로그아웃</span>
+          </div>
+        ) : (
+          <div onClick={() => navigate("/login")}>
+            <FontAwesomeIcon icon={faUser} />
+            <span style={{ cursor: "pointer" }}>로그인</span>
+          </div>
+        )}
+      </div>
+
+      <div className="nav-logo">
+        <Link to="/">
+          <img
+            width={100}
+            alt="h&m 로고"
+            src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-1999-present.jpg"
+          />
+        </Link>
+      </div>
+      <div className="nav-menu-area">
+        <ul className="menu">
+          {menuList.map((menu, index) => (
+            <li>
+              <Link href="#" key={index} />
+              {menu}
+            </li>
+          ))}
+        </ul>
+
+        <div className="search-box">
+          <FontAwesomeIcon icon={faSearch} />
+          <input type="text" placeholder="제품검색" onKeyPress={onCheckEnter} />
+        </div>
       </div>
       <GeneralModal
         show={showModal}
-        onHide={handleCloseModal}
-        title="로그아웃 확인"
-        body="로그아웃하시겠습니까?"
+        onHide={() => setShowModal(false)}
+        title="로그아웃"
+        body="정말로 로그아웃 하시겠습니까?"
+        confirmButtonText="확인"
         cancelButtonText="취소"
-        confirmButtonText="로그아웃"
-        onConfirm={handleLogout}
+        onConfirm={confirmLogout}
       />
-      <div className="nav-section">
-        <img
-          className="logo-img"
-          width={100}
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdodW8JgMsJXGpwo4oYCwWyHUcT_7WN688r_4G7fUpJQ&s"
-          alt="h&M 로고"
-          onClick={goToHome}
-        />
-      </div>
-      <div className="menu-area">
-        <ul className="menu-list">
-          {menuList.map((menu) => (
-            <li key={menu}>{menu}</li>
-          ))}
-        </ul>
-        <div className="search-container">
-          <IoIosSearch />
-          <input type="text" onKeyPress={(event) => search(event)} />
-        </div>
-      </div>
     </div>
   );
 };
