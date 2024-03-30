@@ -69,16 +69,15 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
       <div className="nav-menu-area">
         <ul className="menu">
           {menuList.map((menu, index) => (
-            <li>
-              <Link href="#" key={index} />
-              {menu}
+            <li key={index}>
+              <Link to="#">{menu}</Link>
             </li>
           ))}
         </ul>
 
         <div className="search-box">
           <FontAwesomeIcon icon={faSearch} />
-          <input type="text" placeholder="제품검색" onKeyPress={onCheckEnter} />
+          <input type="text" placeholder="search..." onKeyDown={onCheckEnter} />
         </div>
       </div>
       <GeneralModal
