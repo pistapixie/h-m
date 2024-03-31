@@ -1,135 +1,195 @@
-body{
+body {
   font-family: sans-serif;
 }
-.nav-header{
-  display:flex;
+
+.nav-header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-right: 20px;
-  
 }
 
 .nav-header * {
   margin-right: 10px;
   margin-top: 20px;
 }
-.menu{
+
+.menu {
   display: flex;
   list-style-type: none;
   padding: 20px;
 }
-.menu li a{
+
+.menu li a {
   text-decoration: none;
-  color:black;
-  margin-left:20px;
+  color: black;
+  margin-left: 20px;
 }
 
-.nav-logo{
+.nav-logo {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
-.nav-menu-area{
+
+.nav-menu-area {
   display: flex;
   justify-content: center;
 }
-.burger-menu{
+
+.burger-menu {
   margin-left: 20px;
 }
 
-
-.search-box{
+.search-box {
   border-bottom: 1px solid black;
   position: absolute;
   right: 20px;
   padding: 5px;
-  /* padding-bottom: 30px; */
-}
-.search-box input{
-  border:none;
-  margin-left:5px;
-}
-.search-box input:focus {
-  outline:none
+  margin-bottom: 40px; 
 }
 
-.card{
-  border:none !important;
+.search-box input {
+  border: none;
+  margin-left: 5px;
+}
+
+.search-box input:focus {
+  outline: none;
+}
+
+.card {
+  border: none !important;
   margin-bottom: 10px;
 }
 
-.choice{
-  font-size:11px;
-  color: #63786a;
-  font-weight: bold;
-  height: 20px;
-}
-.products-container{
+
+
+.products-container {
   padding-top: 50px;
 }
-.new-product {
-  font-size: 11px;
-  height: 20px;
+
+.products-container .row .col-lg-3 {
+  margin-bottom: 30px; /* 각 상품들 사이의 세로 간격 넓히기 */
 }
-.login-container{
+
+.new-product,
+.choice {
+  z-index: 1; /* 상품 이미지 위에 표시되도록 z-index 설정 */
+}
+
+.login-container {
   padding-top: 80px;
 }
-.login-form{
-  /* padding-top: 30px; */
-  width:40em;
+
+.login-form {
+  width: 40em;
 }
-.login-area{
-  /* padding-top: 30px; */
+
+.login-area {
   display: flex;
   justify-content: center;
 }
 
 .form-control:valid {
-  background-color:  white !important;
+  background-color: white !important;
 }
 
-.product-detail-img{
-  display: flex;
-  justify-content: flex-end;
+.product-detail-img {
+  display: block;
 }
 
-.product-detail-img img{
+.product-img img {
   width: 100%;
+  height: auto;
 }
-.product-info{
+
+.product-info {
   font-size: 20px;
   margin-bottom: 10px;
 }
-.drop-down{
-  margin-top:20px;
+
+.drop-down {
+  margin-top: 20px;
 }
 
-.add-button{
-  margin-top:20px;
+.add-button {
+  margin-top: 20px;
   width: 100%;
 }
 
-.card:hover{
+.card:hover {
   transform: scale(1.1);
   z-index: 1;
 }
-.hide{
-  visibility:hidden
+
+.hide {
+  visibility: hidden;
 }
 
-@media screen and (max-width: 63rem) {
-  .hide {
-    visibility:visible;
+
+
+@media (max-width: 768px) {
+  .product-detail-container .row .col,
+  .products-container .row .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
+
+  .product-img img,
+  .product-img-container img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .hide {
+    visibility: visible;
+  }
+
   .menu {
     display: none;
   }
-  .search-box{
-    position: static; /* 필요에 따라 조정 */
-    padding: 5px 0; /* 상단과 하단 패딩 조정 */
-    width: auto; /* 너비를 auto로 조정하여 전체 너비를 사용 */
+
+  .nav-logo img {
+    width: 50px;
+    margin-right: auto; /* 로고 이미지를 화면 중앙에 배치하기 위해 필요한 경우 조정 */
+  }
+
+  .burger-menu {
+    display: block;
+    visibility: visible;
+    margin-right: 20px;
+  }
+
+  .nav-header {
+    padding: 0 15px;
+  }
+
+  .nav-header > div {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+
+  .nav-header > div:first-child {
+    justify-content: flex-start;
+    flex-grow: 0;
+  }
+
+  .nav-header, .nav-menu-area, .side-menu-list {
+    font-size: 20px;
+  }
+
+  /* 모바일 뷰에서 상품 카드의 텍스트와 이미지를 중앙 정렬 */
+  .product-card, .product-img-container, .product-info {
+    width: 100%;
+    margin: auto;
   }
 }
+
 
 .side-menu {
   height: 100%;
@@ -144,6 +204,7 @@ body{
   padding-top: 60px;
   box-shadow: 5px 0 10px -2px rgba(190, 190, 190, 0.7);
 }
+
 .side-menu-list button {
   margin: 5px;
   border: none;
@@ -170,4 +231,7 @@ body{
 .side-menu-list button:hover {
   background-color: white;
   border-radius: 3px;
-} 
+}
+.product-detail-container {
+  padding-top: 50px; /* 네브바 밑 간격 추가 */
+}
