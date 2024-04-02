@@ -73,10 +73,7 @@ body {
   margin-bottom: 30px; 
 }
 
-.new-product,
-.choice {
-  z-index: 1; 
-}
+
 
 .login-container {
   padding-top: 80px;
