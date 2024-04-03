@@ -1,16 +1,19 @@
-function getProducts(searchQuery) {
-  return async (dispatch, getState) => {
-    let url = `https://my-json-server.typicode.com/pistapixie/h-m/products?q=${searchQuery}`;
-    try {
-      let response = await fetch(url);
-      let data = await response.json();
-      // console.log(data);
-      dispatch({ type: "GET_PRODUCT_SUCCESS", payload: { data } });
-    } catch (error) {
-      console.error("Fetching products failed:", error);
-    }
-  };
-}
+import { productActions } from "../reducers/productSlice";
+
+// function getProducts(searchQuery) {
+//   return async (dispatch, getState) => {
+//     let url = `https://my-json-server.typicode.com/pistapixie/h-m/products?q=${searchQuery}`;
+//     try {
+//       let response = await fetch(url);
+//       let data = await response.json();
+//       // console.log(data);
+//       dispatch({ type: "GET_PRODUCT_SUCCESS", payload: { data } });
+//       dispatch(productActions.getAllProducts({ data }));
+//     } catch (error) {
+//       console.error("Fetching products failed:", error);
+//     }
+//   };
+// }
 
 function getProductDetail(id) {
   return async (dispatch) => {
@@ -21,4 +24,4 @@ function getProductDetail(id) {
   };
 }
 
-export const productAction = { getProducts, getProductDetail };
+export const productAction = { getProductDetail };
