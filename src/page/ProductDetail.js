@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { productAction } from "../redux/actions/productAction";
 
 const ProductDetail = () => {
   let { id } = useParams();
-  const [product, setProduct] = useState(null);
+  const product = useSelector((state) => state.product.selectedItem);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getProductDetail = async () => {
-      let url = `https://my-json-server.typicode.com/pistapixie/h-m/products/${id}`;
-      let response = await fetch(url);
-      let data = await response.json();
-      setProduct(data);
-    };
-
-    getProductDetail();
-  }, [id]);
+    dispatch(productAction.getProductDetail(id));
+  }, [dispatch, id]);
 
   return (
     <div className="product-detail-container">
