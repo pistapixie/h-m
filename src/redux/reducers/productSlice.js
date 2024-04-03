@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { thunk } from "redux-thunk";
 
 let initialState = {
   productList: [],
-  selectedItem: null,
+  selectedItem: null, // 상세 정보를 저장할 상태
   isLoading: false,
   error: null,
 };
 
+// 상품 리스트를 비동기적으로 가져오는 thunk
 export const fetchProducts = createAsyncThunk(
   "product/fetchAll",
   async (searchQuery, thunkApi) => {
@@ -16,31 +16,29 @@ export const fetchProducts = createAsyncThunk(
       let response = await fetch(url);
       return await response.json();
     } catch (error) {
-      thunkApi.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
-// function productReducer(state = initialState, action) {
-//   switch (action.type) {
-//     case "GET_PRODUCT_SUCCESS":
-//       return { ...state, productList: action.payload.data };
-//     case "GET_SINGLE_PRODUCT_SUCCESS":
-//       return { ...state, selectedItem: action.payload.data };
-//     default:
-//       return state;
-//   }
-// }
 
-// export default productReducer;
+// 상품 상세 정보를 비동기적으로 가져오는 thunk
+export const fetchProductDetail = createAsyncThunk(
+  "product/fetchDetail",
+  async (productId, thunkApi) => {
+    try {
+      let url = `https://my-json-server.typicode.com/pistapixie/h-m/products/${productId}`;
+      let response = await fetch(url);
+      return await response.json();
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {
-    getSingleProduct(state, action) {
-      state.selectedItem = action.payload.data;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -53,6 +51,17 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchProductDetail.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchProductDetail.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.selectedItem = action.payload;
+      })
+      .addCase(fetchProductDetail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
