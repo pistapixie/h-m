@@ -5,4 +5,8 @@ function login(id, password) {
   };
 }
 
-export const authenciateAction = { login };
+function logout() {
+  return { type: "LOGOUT_SUCCESS" };
+}
+
+export const authenciateAction = { login, logout };

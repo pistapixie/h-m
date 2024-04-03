@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import GeneralModal from "../component/GeneralModal";
+import { authenciateAction } from "../redux/actions/authenciateAction";
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const authenticate = useSelector((state) => state.auth.authenticate);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const confirmLogout = () => {
+    dispatch(authenciateAction.logout());
     setShowModal(false);
     navigate("/");
   };
@@ -69,7 +71,7 @@ const Navbar = () => {
         <Link to="/">
           <img
             width={100}
-            alt="h&m 로고"
+            alt="H&M 로고"
             src="https://logos-world.net/wp-content/uploads/2020/04/HM-Logo-1999-present.jpg"
           />
         </Link>
