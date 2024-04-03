@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import GeneralModal from "./GeneralModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-const Navbar = ({ authenticate, setAuthenticate }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import GeneralModal from "../component/GeneralModal";
+
+const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
+  const authenticate = useSelector((state) => state.auth.authenticate);
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const confirmLogout = () => {
-    setAuthenticate(false);
     setShowModal(false);
+    navigate("/");
   };
+
   const menuList = [
     "여성",
     "Divided",
@@ -21,13 +27,15 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
     "Sale",
     "지속가능성",
   ];
+
   let [width, setWidth] = useState(0);
-  let navigate = useNavigate();
+
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
       navigate(`?q=${event.target.value}`);
     }
   };
+
   return (
     <div>
       <div className="side-menu" style={{ width: width }}>
